@@ -1,0 +1,146 @@
+openapi: 3.0.3
+info:
+  title: Mindful Balance Federated Learning API
+  version: 1.0.0
+  description: |
+    Round-based federated learning coordination API.
+    Notes:
+      - This demo server aggregates client-submitted model weight vectors (FedAvg-style).
+      - Raw user data is never sent to the server.
+servers:
+  - url: http://localhost:3001
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        "200":
+          description: OK
+  /api/fl/v1/register:
+    post:
+      summary: Register a client (returns clientId)
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                clientInfo:
+                  type: object
+      responses:
+        "200":
+          description: Registered
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  clientId: { type: string }
+  /api/fl/v1/round:
+    get:
+      summary: Get current round metadata
+      responses:
+        "200":
+          description: Current round
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Round"
+  /api/fl/v1/model:
+    get:
+      summary: Get global model for current round
+      responses:
+        "200":
+          description: Global model
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GlobalModel"
+  /api/fl/v1/update:
+    post:
+      summary: Submit a client update for the current round
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClientUpdate"
+      responses:
+        "200":
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  roundId: { type: string }
+                  pendingUpdates: { type: integer }
+  /api/fl/v1/round/{roundId}/aggregate:
+    post:
+      summary: Force aggregation for a specific round
+      parameters:
+        - in: path
+          name: roundId
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Aggregated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GlobalModel"
+components:
+  schemas:
+    Round:
+      type: object
+      properties:
+        roundId: { type: string }
+        startedAt: { type: integer, description: "unix ms" }
+        minUpdatesToAggregate: { type: integer }
+        pendingUpdates: { type: integer }
+        modelVersion: { type: integer }
+    ModelWeights:
+      type: object
+      properties:
+        mood: { type: number }
+        sleepHours: { type: number }
+        sleepQuality: { type: number }
+        workHours: { type: number }
+        screenTime: { type: number }
+        physicalActivity: { type: number }
+        socialInteraction: { type: number }
+        phq9: { type: number }
+        bias: { type: number }
+      required:
+        - mood
+        - sleepHours
+        - sleepQuality
+        - workHours
+        - screenTime
+        - physicalActivity
+        - socialInteraction
+        - phq9
+        - bias
+    GlobalModel:
+      type: object
+      properties:
+        weights:
+          $ref: "#/components/schemas/ModelWeights"
+        modelVersion: { type: integer }
+        roundId: { type: string }
+        timestamp: { type: integer, description: "unix ms" }
+        pendingUpdates: { type: integer }
+    ClientUpdate:
+      type: object
+      properties:
+        clientId: { type: string }
+        roundId: { type: string, description: "optional; defaults to current round" }
+        sampleCount: { type: integer, minimum: 1 }
+        weights:
+          $ref: "#/components/schemas/ModelWeights"
+      required:
+        - clientId
+        - weights

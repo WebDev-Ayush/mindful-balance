@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Header } from '@/components/Header';
-import { WellnessForm } from '@/components/WellnessForm';
 import { StressIndicator } from '@/components/StressIndicator';
 import { WellnessTips } from '@/components/WellnessTips';
 import { FactorBreakdown } from '@/components/FactorBreakdown';
@@ -10,6 +10,7 @@ import { FederatedStatus } from '@/components/FederatedStatus';
 import { predictStress, saveWellnessData, type WellnessData, type PredictionResult } from '@/lib/stressModel';
 
 const Index = () => {
+  const navigate = useNavigate();
   const [prediction, setPrediction] = useState<PredictionResult | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -59,14 +60,26 @@ const Index = () => {
 
         {/* Main Content Grid */}
         <div className="grid lg:grid-cols-2 gap-8">
-          {/* Left Column - Form */}
+          {/* Left Column */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
             className="space-y-6"
           >
-            <WellnessForm onSubmit={handleWellnessSubmit} isProcessing={isProcessing} />
+            <div className="glass-card rounded-2xl p-6 space-y-3">
+              <h3 className="text-sm font-semibold text-foreground">Start your check-in</h3>
+              <p className="text-xs text-muted-foreground">
+                We’ll ask a few daily wellness questions, then PHQ-9, then show your stress analysis on a dedicated page.
+              </p>
+              <button
+                type="button"
+                onClick={() => navigate('/checkin')}
+                className="text-xs font-medium text-primary hover:underline"
+              >
+                Begin
+              </button>
+            </div>
             
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -77,7 +90,7 @@ const Index = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right Column - Results */}
+          {/* Right Column - Demo */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -87,7 +100,7 @@ const Index = () => {
             {/* Stress Indicator Card */}
             <div className="glass-card rounded-2xl p-8">
               <div className="flex flex-col items-center">
-                <StressIndicator prediction={prediction} size="lg" />
+                  <StressIndicator prediction={prediction} size="lg" />
               </div>
             </div>
 

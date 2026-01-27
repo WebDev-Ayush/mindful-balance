@@ -59,6 +59,39 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+- **Federated Learning** - Privacy-preserving machine learning
+
+## Federated Learning Setup
+
+This project includes a federated learning server for privacy-preserving model training. To use it:
+
+1. **Start the federated learning server:**
+   ```bash
+   cd server
+   npm install
+   npm start
+   ```
+   The server runs on `http://localhost:3001` by default.
+
+2. **Configure the frontend:**
+   Create a `.env` file in the root directory:
+   ```
+   VITE_FEDERATED_SERVER_URL=http://localhost:3001
+   ```
+
+3. **Run the frontend:**
+   ```bash
+   npm install
+   npm run dev
+   ```
+
+The frontend will automatically sync with the federated learning server to:
+- Download the latest global model
+- Train locally on user data
+- Upload encrypted model updates (never raw data)
+- Improve predictions through collective learning
+
+See `server/README.md` for more details about the federated learning implementation.
 
 ## How can I deploy this project?
 
