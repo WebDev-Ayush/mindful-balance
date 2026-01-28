@@ -20,9 +20,12 @@ export default function Emotion() {
       let emotionDelta = 0;
       if (emotion) {
         const sign =
-          emotion.label === 'happy' || emotion.label === 'calm'
+          emotion.label === 'happy' || emotion.label === 'neutral'
             ? -1
-            : emotion.label === 'stressed' || emotion.label === 'sad'
+            : emotion.label === 'sad' ||
+              emotion.label === 'angry' ||
+              emotion.label === 'fear' ||
+              emotion.label === 'disgust'
             ? 1
             : 0;
         emotionDelta = sign * Math.round(emotion.confidence * 5);

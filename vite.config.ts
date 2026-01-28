@@ -6,7 +6,9 @@ import { componentTagger } from "lovable-tagger";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
-    host: "::",
+    // Bind only to localhost so the app runs on http://localhost:8080,
+    // which is treated as a secure context for camera access.
+    host: "localhost",
     port: 8080,
     hmr: {
       overlay: false,
