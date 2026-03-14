@@ -38,6 +38,9 @@ export default function Emotion() {
       saveWellnessData({ ...draft, prediction: adjustedResult });
       saveEmotionResult(adjustedResult, draft);
 
+      // Small delay so the user can see the finalizing state
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
       navigate('/analysis');
     } finally {
       setIsSaving(false);

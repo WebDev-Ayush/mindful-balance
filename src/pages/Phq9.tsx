@@ -20,18 +20,29 @@ function FullscreenLoader({ visible }: { visible: boolean }) {
             initial={{ scale: 0.96, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.98, opacity: 0 }}
-            className="glass-card rounded-2xl p-6 w-[min(420px,90vw)] text-center space-y-3"
+            className="glass-card rounded-2xl p-6 w-[min(420px,90vw)] text-center space-y-4"
           >
-            <motion.div
-              className="mx-auto w-10 h-10 rounded-xl bg-primary/10 grid place-items-center"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1.1, repeat: Infinity, ease: 'linear' }}
-            >
-              <div className="w-4 h-4 rounded-full bg-primary" />
-            </motion.div>
+            <div className="mb-preloader">
+              <div className="mb-loader-main">
+                <div className="mb-loaders">
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <div key={`bar-${i}`} className="mb-loader-bar" />
+                  ))}
+                </div>
+                <div className="mb-loadersB">
+                  {Array.from({ length: 9 }).map((_, i) => (
+                    <div key={`col-${i}`} className="mb-loader-column">
+                      <div className={`mb-ball mb-ball-${i}`} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
             <div>
               <p className="text-sm font-semibold text-foreground">Analyzing locally…</p>
-              <p className="text-xs text-muted-foreground">Previous steps are hidden while we generate your result.</p>
+              <p className="text-xs text-muted-foreground">
+                Previous steps are hidden while we generate your result.
+              </p>
             </div>
           </motion.div>
         </motion.div>
@@ -54,8 +65,8 @@ export default function Phq9() {
       const full: WellnessData = { ...draft, phq9: normalized };
       saveDraft(full);
 
-      // Simulate local processing time (and allow animation to be seen)
-      await new Promise(resolve => setTimeout(resolve, 1200));
+      // Simulate local processing time (and allow animation to be clearly visible)
+      await new Promise(resolve => setTimeout(resolve, 2000));
 
       const result = predictStress(full);
       saveWellnessData({ ...full, prediction: result });

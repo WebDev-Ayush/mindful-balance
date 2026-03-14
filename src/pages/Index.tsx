@@ -7,6 +7,7 @@ import { WellnessTips } from '@/components/WellnessTips';
 import { FactorBreakdown } from '@/components/FactorBreakdown';
 import { PrivacyBadge } from '@/components/PrivacyBadge';
 import { FederatedStatus } from '@/components/FederatedStatus';
+import { HeroStartButton } from '@/components/HeroStartButton';
 import { predictStress, saveWellnessData, type WellnessData, type PredictionResult } from '@/lib/stressModel';
 
 const Index = () => {
@@ -72,13 +73,7 @@ const Index = () => {
               <p className="text-xs text-muted-foreground">
                 We’ll ask a few daily wellness questions, then PHQ-9, then show your stress analysis on a dedicated page.
               </p>
-              <button
-                type="button"
-                onClick={() => navigate('/checkin')}
-                className="text-xs font-medium text-primary hover:underline"
-              >
-                Begin
-              </button>
+              <HeroStartButton onClick={() => navigate('/checkin')} />
             </div>
             
             <motion.div
