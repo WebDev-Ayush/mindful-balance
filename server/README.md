@@ -77,3 +77,4 @@ Get server statistics including pending updates, unique clients, and aggregation
 5. Clients update their local models with the global model
 
 This ensures user privacy while improving model accuracy through collective learning.
+

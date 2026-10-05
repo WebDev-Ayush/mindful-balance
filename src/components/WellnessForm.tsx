@@ -239,3 +239,4 @@ export function WellnessForm({ onSubmit, isProcessing }: WellnessFormProps) {
     </Card>
   );
 }
+

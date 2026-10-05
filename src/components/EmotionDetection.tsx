@@ -335,3 +335,4 @@ export function EmotionDetection({ onDetected }: EmotionDetectionProps) {
   );
 }
 
+

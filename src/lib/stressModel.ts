@@ -365,3 +365,4 @@ export function getWellnessHistory(): (WellnessData & { prediction: PredictionRe
   const stored = localStorage.getItem(STORAGE_KEY);
   return stored ? JSON.parse(stored) : [];
 }
+

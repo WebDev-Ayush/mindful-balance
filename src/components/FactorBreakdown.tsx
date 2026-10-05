@@ -79,3 +79,4 @@ export function FactorBreakdown({ prediction }: FactorBreakdownProps) {
     </Card>
   );
 }
+

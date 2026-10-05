@@ -150,3 +150,4 @@ export function StressIndicator({ prediction, size = 'md' }: StressIndicatorProp
     </motion.div>
   );
 }
+

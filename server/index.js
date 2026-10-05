@@ -294,3 +294,4 @@ app.listen(PORT, () => {
   console.log(`Federated Learning Server running on http://localhost:${PORT}`);
   console.log(`Global model initialized:`, globalModel);
 });
+

@@ -74,3 +74,4 @@ export function PrivacyBadge({ variant = 'compact' }: PrivacyBadgeProps) {
     </motion.div>
   );
 }
+

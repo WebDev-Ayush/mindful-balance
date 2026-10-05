@@ -61,3 +61,4 @@ export function WellnessTips({ prediction }: WellnessTipsProps) {
     </Card>
   );
 }
+
